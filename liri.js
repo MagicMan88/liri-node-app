@@ -7,10 +7,7 @@ var axios = require("axios");
 var moment = require("moment");
 var Spotify = require('node-spotify-api');
 var fs = require("fs");
-var spotify = new Spotify({
-  id: keys.spotify.id,
-  secret: keys.spotify.secret,
-});
+var spotify = new Spotify(keys.spotify);
 // var defaultSong = require("The Sign");
 var defaultMovie = "Mr. Nobody";
 // var spotify = new Spotify(keys.spotify);
@@ -63,6 +60,7 @@ function getBands(artist) {
     });
 }
 
+// Function to search spotify API and return song
 function getSongs(songName) {
   // var songName = value;
 
@@ -125,6 +123,7 @@ function getMovies(movieName) {
   };
 }
 
+// Do what it says function
 function doWhatItSays() {
   fs.readFile("random.txt", "utf8", function (err, data) {
     data = data.split(",");
