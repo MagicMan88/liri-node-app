@@ -12,7 +12,6 @@ var spotify = new Spotify(keys.spotify);
 var defaultMovie = "Mr. Nobody";
 
 
-
 /**
 Name of the venue
 Venue location
@@ -22,80 +21,85 @@ var action = process.argv[2];
 var value = process.argv[3];
 
 switch (action) {
-  case "concert-this":
-    getBands(value)
-    break;
-  case "spotify-this-song":
-    //If user has not specified a song , use default
-    // if (value === "") {
-    // value = defaultSong;
-    // }
-    getSongs(value)
-    break;
-  case "movie-this":
-    //If user has not specified a movie , use default
-    if (value == "") {
-      value = defaultMovie;
-    }
-    getMovies(value)
-    break;
-  case "do-what-it-says":
-    doWhatItSays()
-    break;
-  default:
-    break;
+    case "concert-this":
+        getBands(value)
+        break;
+    case "spotify-this-song":
+        //If user has not specified a song , use default
+        // if (value === "") {
+        // value = defaultSong;
+        // }
+        getSongs(value)
+        break;
+    case "movie-this":
+        //If user has not specified a movie , use default
+        if (value == "") {
+            value = defaultMovie;
+        }
+        getMovies(value)
+        break;
+    case "do-what-it-says":
+        doWhatItSays()
+        break;
+    default:
+        break;
 }
+
 
 // Function to get bands
 function getBands(artist) {
-  var artist = value;
-  axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
-    .then(function (response) {
-      console.log("Name of the venue:", response.data[0].venue.name);
-      console.log("Venue location:", response.data[0].venue.city);
-      var eventDate = moment(response.data[0].datetime).format('MM/DD/YYYY');
-      console.log("Date of the Event:", eventDate);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    var artist = value;
+    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+        .then(function (response) {
+            console.log("Name of the venue:", response.data[0].venue.name);
+            console.log("Venue location:", response.data[0].venue.city);
+            var eventDate = moment(response.data[0].datetime).format('MM/DD/YYYY');
+            console.log("Date of the Event:", eventDate);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
+
 
 // Function to search spotify API and return song
 function getSongs(songName) {
-  var songName = value;
-  //If user has not specified a song , default to "The Sign" by Ace of Bass
-  if (songName === "") {
-    songName = "I Saw the Sign";
-  }
-
-  spotify.search({ type: 'track', query: songName }, function (err, data) {
-    if (err) {
-      return console.log('Error occurred: ' + err);
+    var songName = value;
+    //If user has not specified a song , default to "The Sign" by Ace of Bass
+    if (songName === "") {
+        songName = "I Saw the Sign";
     }
-    // else {
-    //   console.log("Not right now. Later?")
 
-    // console.log(JSON.stringify(data)); 
+    spotify.search({
+        type: 'track',
+        query: songName
+    }, function (err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        }
+        // else {
+        //   console.log("Not right now. Later?")
 
-    // The song's name
+        // console.log(JSON.stringify(data)); 
 
-    //Artist(s)
-    console.log("Artists: ", data.tracks.items[0].album.artists[0].name)
-    // A preview link of the song from Spotify
-    console.log("Preview Link: ", data.tracks.items[0].preview_url)
-    // The album that the song is from
-    console.log("Album Name: ", data.tracks.items[0].album.name)
-  });
+        // The song's name
+
+        //Artist(s)
+        console.log("Artists: ", data.tracks.items[0].album.artists[0].name)
+        // A preview link of the song from Spotify
+        console.log("Preview Link: ", data.tracks.items[0].preview_url)
+        // The album that the song is from
+        console.log("Album Name: ", data.tracks.items[0].album.name)
+    });
 }
 
 // Function to get movies from IMDB API
 function getMovies(movieName) {
-  // var movieName = value;
-  axios.get("http://www.omdbapi.com/?i=tt3896198&apikey=a72cb1" + movieName)
-    .then(function (data) {
-      // console.log(data.data); 
-      var results = `
+    // var movieName = value;
+    axios.get("http://www.omdbapi.com/?i=tt3896198&apikey=a72cb1" + movieName)
+        .then(function (data) {
+            // console.log(data.data); 
+            var results = `
       Title of the movie: ${data.data.Title}
       Year the movie came out: ${data.data.Year}
       IMDB Rating of the movie: ${data.data.Rated}
@@ -104,44 +108,44 @@ function getMovies(movieName) {
       Language of the movie: ${data.data.Language}
       Plot of the movie: ${data.data.Plot}
       Actors in the movie: ${data.data.Actors}`;
-      console.log(results)
+            console.log(results)
 
-      // console.log(data);
-      // console.log("Name of the venue:", response.data[0].venue.name);
-      // console.log("Venue location:", response.data[0].venue.city);
-      // var eventDate = moment(response.data[0].datetime).format('MM/DD/YYYY');
-      // console.log("Date of the Event:", eventDate);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+            // console.log(data);
+            // console.log("Name of the venue:", response.data[0].venue.name);
+            // console.log("Venue location:", response.data[0].venue.city);
+            // var eventDate = moment(response.data[0].datetime).format('MM/DD/YYYY');
+            // console.log("Date of the Event:", eventDate);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     //Response if user does not type in a movie title
     if (movieName === "Mr. Nobody") {
-      console.log("-----------------------");
-      console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/");
-      console.log("It's on Netflix!");
-  };
+        console.log("-----------------------");
+        console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/");
+        console.log("It's on Netflix!");
+    };
 }
 
 // Do what it says function
 function doWhatItSays() {
-  fs.readFile("random.txt", "utf8", function (err, data) {
-    data = data.split(",");
-    var action = data[0]
-    var value = data[1]
-    // getSongs(value)
-    switch (action) {
-      case "concert-this":
-        getBands(value)
-        break;
-      case "spotify-this-song":
-        getSongs(value)
-        break;
-      case "movie-this":
-        getMovies(value)
-        break;
-      default:
-        break;
-    }
-  });
+    fs.readFile("random.txt", "utf8", function (err, data) {
+        data = data.split(",");
+        var action = data[0]
+        var value = data[1]
+        // getSongs(value)
+        switch (action) {
+            case "concert-this":
+                getBands(value)
+                break;
+            case "spotify-this-song":
+                getSongs(value)
+                break;
+            case "movie-this":
+                getMovies(value)
+                break;
+            default:
+                break;
+        }
+    });
 }
