@@ -1,8 +1,8 @@
 {
   "name": "liri-node-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "keys.js",
+  "description": "This application pulls data from three APIs using the command line.",
+  "main": "liri.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/MagicMan88/liri-node-app.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Stephen Green",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MagicMan88/liri-node-app/issues"

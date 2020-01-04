@@ -2,7 +2,7 @@
 require("dotenv").config();
 
 //Add the code required to import the keys.js file and store it in a variable.
-var keys = require("./keys");
+var keys = require("./keys.js");
 var axios = require("axios");
 var moment = require("moment");
 var Spotify = require('node-spotify-api');
@@ -10,12 +10,11 @@ var fs = require("fs");
 var spotify = new Spotify(keys.spotify);
 // var defaultSong = require("The Sign");
 var defaultMovie = "Mr. Nobody";
-// var spotify = new Spotify(keys.spotify);
 
 
 
 /**
- * Name of the venue
+Name of the venue
 Venue location
 Date of the Event (use moment to format this as "MM/DD/YYYY")
  */
@@ -29,7 +28,7 @@ switch (action) {
   case "spotify-this-song":
     //If user has not specified a song , use default
     // if (value === "") {
-    //   value = defaultSong;
+    // value = defaultSong;
     // }
     getSongs(value)
     break;
@@ -46,8 +45,10 @@ switch (action) {
   default:
     break;
 }
+
+// Function to get bands
 function getBands(artist) {
-  // var artist = value;
+  var artist = value;
   axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
     .then(function (response) {
       console.log("Name of the venue:", response.data[0].venue.name);
@@ -62,8 +63,7 @@ function getBands(artist) {
 
 // Function to search spotify API and return song
 function getSongs(songName) {
-  // var songName = value;
-
+  var songName = value;
   //If user has not specified a song , default to "The Sign" by Ace of Bass
   if (songName === "") {
     songName = "I Saw the Sign";
