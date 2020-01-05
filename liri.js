@@ -8,7 +8,7 @@ var moment = require("moment");
 var Spotify = require('node-spotify-api');
 var fs = require("fs");
 var spotify = new Spotify(keys.spotify);
-// var defaultSong = require("The Sign");
+var defaultSong = require("The Sign");
 var defaultMovie = "Mr. Nobody";
 
 
@@ -25,10 +25,10 @@ switch (action) {
         getBands(value)
         break;
     case "spotify-this-song":
-        //If user has not specified a song , use default
-        // if (value === "") {
-        // value = defaultSong;
-        // }
+       //If user has not specified a song , use default
+         if (value === "") {
+         value = defaultSong;
+         }
         getSongs(value)
         break;
     case "movie-this":
