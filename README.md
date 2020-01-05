@@ -70,3 +70,6 @@ If the user does not enter a movie selection, the program outputs data for the m
 4. node liri.js do-what-it-says
 
  - Runs spotify-this-song for "I Want it That Way".
+### Images of the app
+![](images/liri1.PNG)
+![](images/liri2.PNG)
